@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('available_jobs', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('logo');
             $table->string('description');
             $table->text('about');
             $table->text('website');
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->string('site');
             $table->string('duration');
             $table->string('amount');
+            $table->foreignId('company_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
