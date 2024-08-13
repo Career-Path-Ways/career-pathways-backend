@@ -73,9 +73,9 @@ class AuthController extends Controller
 
             //return user & token in response
             return response([
-                'message' => 'Welcome ' . auth()->user()->username,
-                'user' => auth()->user(),
-                'token' => auth()->user()->createToken('secret')->plainTextToken
+                'message' => 'Welcome ' . $request->user()->username,
+                'user' => $request->user(),
+                'token' => $request->user()->createToken('secret')->plainTextToken
             ], 200);
         } catch (ValidationException $e) {
             return response()->json([
@@ -88,7 +88,7 @@ class AuthController extends Controller
     // Logout
     public function logout(Request $request)
     {
-        $user = auth()->user();
+        $user = $request->user();
         if (!$user) {
             return response([
                 'message' => 'Unauthorized'
@@ -97,5 +97,16 @@ class AuthController extends Controller
 
         $request->user()->currentAccessToken()->delete();
         return response(['message' => 'Logged out!'], 200);
+    }
+
+    public function storeProfile(Request $request)
+    {
+        $url = $this->saveImage(request()->thumbnail, 'avatars');
+        $request->update(['avatar' => $url]);
+
+        return response([
+            'message' => 'Profile updated successfully',
+            'user' => $request->user()
+        ]);
     }
 }
