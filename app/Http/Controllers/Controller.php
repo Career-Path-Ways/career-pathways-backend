@@ -9,6 +9,8 @@ abstract class Controller
 {
     public function saveImage($image, $path = 'public')
     {
+        $base_url = "http://172.20.10.13:8000";
+
         if (!$image) {
             return null;
         }
@@ -24,6 +26,6 @@ abstract class Controller
         Storage::disk($path)->put($filename, file_get_contents($image));
 
         //return path to image
-        return URL::to('/') . '/storage/' . $path . '/' . $filename;
+        return $base_url . '/storage/' . $path . '/' . $filename;
     }
 }
