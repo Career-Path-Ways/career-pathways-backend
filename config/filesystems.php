@@ -51,6 +51,13 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+        'CompanyLogo' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/CompanyLogo'),
+            'url' => env('APP_URL') . '/storage/CompanyLogo',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
 
         's3' => [
             'driver' => 's3',
