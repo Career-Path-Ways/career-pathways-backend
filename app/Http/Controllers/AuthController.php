@@ -101,12 +101,30 @@ class AuthController extends Controller
 
     public function storeProfile(Request $request)
     {
-        $url = $this->saveImage(request()->thumbnail, 'avatars');
-        $request->update(['avatar' => $url]);
-
+        $attribute = $request->validate([
+            'avatar' => ['required', 'image', 'max:2048']
+        ]);
+        $url = $this->saveImage(request()->avatar, 'avatars');
+        $attribute['avatar'] = $url;
+        $request->user()->update($attribute);
         return response([
             'message' => 'Profile updated successfully',
             'user' => $request->user()
+        ], 200);
+    }
+
+    public function storeAbout(Request $request)
+    {
+
+        $attribute = $request->validate([
+            'about' => 'required|string'
         ]);
+
+        $request->user()->update($attribute);
+
+        return response([
+            'message' => 'About updated successfully',
+            'user' => $request->user()
+        ], 200);
     }
 }
