@@ -17,7 +17,19 @@ class CompanyFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->company()
+            'name' => fake()->company(),
+            'logo' => $this->generatePicsumLogo(),
+            'location' => fake()->city,
+            'phone' => fake()->phoneNumber,
         ];
+    }
+
+    private function generatePicsumLogo()
+    {
+        $seed = fake()->uuid; // Generates a unique seed for each logo
+        $width = 200;
+        $height = 200;
+
+        return "https://picsum.photos/seed/{$seed}/{$width}/{$height}";
     }
 }
